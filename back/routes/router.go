@@ -3,7 +3,7 @@ package routes
 import (
 	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-gonic/gin"
-	"github.com/wejectchen/ginblog/api/v1"
+	v1 "github.com/wejectchen/ginblog/api/v1"
 	"github.com/wejectchen/ginblog/middleware"
 	"github.com/wejectchen/ginblog/utils"
 )
@@ -17,16 +17,16 @@ func createMyRender() multitemplate.Renderer {
 }
 
 func InitRouter() {
+	// 设置收你信任的代理服务器，我怎么知道客户端干过来的是不是代理呢？
 	gin.SetMode(utils.AppMode)
 	r := gin.New()
-	// 设置信任网络 []string
-	// nil 为不计算，避免性能消耗，上线应当设置
-	// 后面可以研究下
+
 	_ = r.SetTrustedProxies(nil)
 
-	r.HTMLRender = createMyRender()
 	r.Use(middleware.Logger())
+
 	r.Use(gin.Recovery())
+	// 这个跨域是为了解决什么而设置的呢？
 	r.Use(middleware.Cors())
 
 	r.Static("/static", "./web/front/dist/static")
@@ -40,7 +40,6 @@ func InitRouter() {
 	r.GET("/admin", func(c *gin.Context) {
 		c.HTML(200, "admin", nil)
 	})
-
 	/*
 		后台管理路由接口
 	*/
@@ -110,5 +109,4 @@ func InitRouter() {
 	}
 
 	_ = r.Run(utils.HttpPort)
-
 }
