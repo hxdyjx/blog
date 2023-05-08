@@ -10,23 +10,20 @@ import (
 
 func createMyRender() multitemplate.Renderer {
 	p := multitemplate.NewRenderer()
-	// 配置前后台界面的路径，yarn编译好的
 	p.AddFromFiles("admin", "web/admin/dist/index.html")
 	p.AddFromFiles("front", "web/front/dist/index.html")
 	return p
 }
 
 func InitRouter() {
-	// 设置收你信任的代理服务器，我怎么知道客户端干过来的是不是代理呢？
 	gin.SetMode(utils.AppMode)
 	r := gin.New()
 
 	_ = r.SetTrustedProxies(nil)
 
+	r.HTMLRender = createMyRender()
 	r.Use(middleware.Logger())
-
 	r.Use(gin.Recovery())
-	// 这个跨域是为了解决什么而设置的呢？
 	r.Use(middleware.Cors())
 
 	r.Static("/static", "./web/front/dist/static")
@@ -36,10 +33,10 @@ func InitRouter() {
 	r.GET("/", func(c *gin.Context) {
 		c.HTML(200, "front", nil)
 	})
-
 	r.GET("/admin", func(c *gin.Context) {
 		c.HTML(200, "admin", nil)
 	})
+
 	/*
 		后台管理路由接口
 	*/
