@@ -1,10 +1,12 @@
 package model
 
 import (
-	"github.com/wejectchen/ginblog/utils/errmsg"
+	"log"
+
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/gorm"
-	"log"
+
+	"github.com/wejectchen/ginblog/utils/errmsg"
 )
 
 type User struct {

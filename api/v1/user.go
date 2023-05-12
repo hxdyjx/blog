@@ -1,12 +1,14 @@
 package v1
 
 import (
+	"net/http"
+	"strconv"
+
 	"github.com/gin-gonic/gin"
+
 	"github.com/wejectchen/ginblog/model"
 	"github.com/wejectchen/ginblog/utils/errmsg"
 	"github.com/wejectchen/ginblog/utils/validator"
-	"net/http"
-	"strconv"
 )
 
 // AddUser 添加用户
@@ -65,7 +67,6 @@ func GetUsers(c *gin.Context) {
 	pageNum, _ := strconv.Atoi(c.Query("pagenum"))
 	username := c.Query("username")
 
-	// 甚妙
 	switch {
 	case pageSize >= 100:
 		pageSize = 100
