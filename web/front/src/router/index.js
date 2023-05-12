@@ -20,7 +20,7 @@ VueRouter.prototype.push = function push(location) {
 }
 
 const routes = [
-  { path: '/', component: ArticleList, meta: { title: '欢迎来到GinBlog' } },
+  { path: '/', component: ArticleList, meta: { title: '华夏第一剑修' } },
   {
     path: '/article/detail/:id',
     component: Detail,
